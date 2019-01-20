@@ -1,0 +1,150 @@
+/Double linked list
+#include <iostream>
+
+using namespace std;
+class node{
+public:
+//data variable
+int data;
+//pointers to next and prev. node
+node *next;
+node *prev;
+//constructor to assign values
+node(){
+data=0;
+next=NULL;
+prev=NULL;
+}
+
+};
+class DLL{
+    public:
+    node *head;
+    
+    DLL(){
+        head=NULL;
+    
+    }
+    //insert finction
+    void insert( int value){
+        //create a new node
+        node * temp= new node;
+        temp->data=value;
+        //check if empty list
+        if(head==NULL)
+        head=temp;
+        //if not empty list
+        else{
+            node *current= head;
+            while(current->next!=NULL)
+            {
+                current=current->next;
+            }
+            current->next=temp;
+            temp->prev=current;
+            //tail=temp->next;
+        }
+    }
+    void insertat( int pos, int value){
+        node * temp=new node;
+        node *current=head;
+        int i=0;
+        while(i<pos ){
+            i++;
+            current=current->next;
+            
+        }
+        temp->data=value;
+       temp->next= current->next;
+        current->next=temp;
+        temp->prev=current;
+        temp->next->prev=temp;
+        
+    }
+    
+    void display(){
+        node *current=head;
+        node *last;
+        
+        while(current!=NULL)
+        {   cout<<current->data<<"->";
+            //make current the tail
+            last=current;
+            //move forward
+            current=current->next;
+            
+            
+            
+        }
+        cout<<endl;
+   
+        
+        //displaying in reverse order
+        while (last!=NULL){
+            cout<<last->data<<"-<";
+            last=last->prev;
+        }
+        
+        cout<<endl;
+    }
+    
+//delete
+
+void Delete(){
+    //temp to store the value to be deleted
+        //node * temp= tail;
+        node * current= head;
+        //access have to move till the end 
+    
+        while(current->next!=NULL)
+        {
+            current=current->next;
+            
+        }
+        
+        current->prev->next=NULL;
+        
+        delete current;
+}
+void Deleteat(int pos){
+    int i=1;
+        node * temp;
+        node * current= head;
+
+        while(i<pos-1)
+        {   i++;
+            current=current->next;}
+            cout<< "current : " << current->data << endl;
+        temp=current->next;
+            cout<< "temp : " << temp->data << endl;
+            temp->next->prev=temp->prev;
+            temp->prev->next=temp->next;
+            
+        //current->next=temp->next;
+        delete temp;
+    
+    
+}
+};
+
+
+int main()
+{
+   DLL l;
+   l.insert(1);
+   l.insert(2);
+   l.insert(3);
+   l.insert(4);
+   l.display();
+ 
+   l.insertat( 2,6);
+    l.display();
+    l.Deleteat(2);
+     l.display();
+    l.Delete();
+     l.display();
+   
+   
+   
+   return 0;
+}
